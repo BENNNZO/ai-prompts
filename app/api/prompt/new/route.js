@@ -1,7 +1,7 @@
 import { connectDB } from "@utils/database"
 import Prompt from "@models/prompt"
 
-export async function GET(req) {
+export async function POST(req) {
     const { userId, prompt, tag } = await req.json()
 
     try {

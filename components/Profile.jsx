@@ -21,7 +21,6 @@ export default function Profile({ name, desc, data, handleEdit, handleDelete }) 
                         handleDelete={() => handleDelete && handleDelete(post)}
                     />
                 ))}
-                <p>{JSON.stringify(data)}</p>
             </div>
         </section>
     )
