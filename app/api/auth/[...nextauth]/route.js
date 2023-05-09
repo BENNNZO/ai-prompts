@@ -4,11 +4,6 @@ import GoogleProvider from 'next-auth/providers/google'
 import { connectDB } from "@utils/database";
 import User from "@models/user";
 
-// console.log({
-//     clientId: process.env.GOOGLE_ID,
-//     clientSecret: process.env.GOOGLE_SK
-// })
-
 const handler = NextAuth({
     providers: [
         GoogleProvider({

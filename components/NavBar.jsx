@@ -22,7 +22,7 @@ export default function NavBar () {
     }, [])
 
     return (
-        <nav className='flex-between w-full pt-3'>
+        <nav className='flex-between w-full py-3 border-b-2'>
             <Link href="/" className='flex gap-2 flex-center'>
                 <Image 
                     src="/assets/images/logo.svg"
