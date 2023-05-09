@@ -8,6 +8,7 @@ import Profile from '@components/Profile';
 
 export default function page() {
     const { data: session } = useSession()
+    const router = useRouter();
 
     const [posts, setPosts] = useState([])
 
@@ -22,12 +23,26 @@ export default function page() {
         if (session?.user.id) fetchPosts()
     }, [session?.user.id])
 
-    function handleEdit() {
-
+    function handleEdit(post) {
+        router.push(`/update-prompt?id=${post._id}`)
     }
 
-    function handleDelete() {
+    async function handleDelete(post) {
+        const hasConfirm = confirm('Are you sure you want to delete this post?')
 
+        if (hasConfirm) {
+            try {
+                await fetch(`/api/prompt/${post._id.toString()}`, {
+                    method: 'DELETE'
+                })
+
+                const filteredPosts = posts.filter(p => p._id !== post._id)
+
+                setPosts(filteredPosts)
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
 
     return (
