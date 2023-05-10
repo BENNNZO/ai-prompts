@@ -18,8 +18,43 @@ export default function Feed() {
         fetchPosts()
     }, [])
 
-    function handleSearchChange(e) {
+    useEffect(() => {
+        async function fetchSearchPosts() {
+            if (searchText === '') {
+                const res = await fetch('/api/prompt')
+                const data = await res.json()
+    
+                setPosts(data)
+            } else {
+                const res = await fetch(`/api/prompt/search/${searchText.replace("#", "%23")}`)
+                const data = await res.json()
+        
+                setPosts(data)
+            }
+        }
+        fetchSearchPosts()
+    }, [searchText])
 
+    function handleEdit(post) {
+        router.push(`/update-prompt?id=${post._id}`)
+    }
+
+    async function handleDelete(post) {
+        const hasConfirm = confirm('Are you sure you want to delete this post?')
+
+        if (hasConfirm) {
+            try {
+                await fetch(`/api/prompt/${post._id.toString()}`, {
+                    method: 'DELETE'
+                })
+
+                const filteredPosts = posts.filter(p => p._id !== post._id)
+
+                setPosts(filteredPosts)
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
 
     return (
@@ -29,7 +64,7 @@ export default function Feed() {
                     type="text"
                     placeholder='Search for a tag or username...'
                     value={searchText}
-                    onChange={handleSearchChange}
+                    onChange={e => setSearchText(e.target.value)}
                     required
                     className='search_input peer'
                 />
@@ -39,7 +74,9 @@ export default function Feed() {
                     <PromptCard
                         key={e._id}
                         post={e}
-                        handleTagClick={() => {}}
+                        handleTagClick={() => setSearchText(e.tag)}
+                        handleEdit={() => handleEdit && handleEdit(e)}
+                        handleDelete={() => handleDelete && handleDelete(e)}
                     />
                 ))}
             </div>

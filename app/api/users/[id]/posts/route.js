@@ -1,7 +1,3 @@
-// import mongoose from "mongoose";
-// import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
-
 import { connectDB } from "@utils/database"
 import Prompt from "@models/prompt"
 

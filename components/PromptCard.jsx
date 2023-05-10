@@ -19,9 +19,9 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
     }
 
     return (
-        <div className='prompt_card shadow-md'>
-            <div className='flex justify-between items-start gap-5'>
-                <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
+        <div className='prompt_card shadow-md flex-1'>
+            <div className='flex justify-between items-start gap-5 flex-1'>
+                <div className='flex justify-start items-center gap-3 cursor-pointer flex-1'>
                     <Image 
                         src={post.creator.image}
                         alt="user_image"
@@ -46,8 +46,9 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
                             ? '/assets/icons/tick.svg'
                             : '/assets/icons/copy.svg'
                         }
-                        width={12}
-                        height={12}
+                        width={18}
+                        height={18}
+                        alt='copy button'
                     />
                 </div>
             </div>
@@ -55,29 +56,31 @@ export default function PromptCard({ post, handleTagClick, handleEdit, handleDel
             <p className="my-4 font-satoshi text-sm text-gray-700">
                 {post.prompt}
             </p>
-            <p 
-                className='font-inter text-sm blue_gradient cursor-pointer'
-                onClick={() => handleTagClick && handleTagClick(post.tag)}
-            >
-                {post.tag}
-            </p>
+            <div className='flex flex-row justify-between border-t-2 pt-2'>
+                <p 
+                    className='font-inter text-sm blue_gradient cursor-pointer'
+                    onClick={() => handleTagClick && handleTagClick(post.tag)}
+                >
+                    {post.tag}
+                </p>
 
-            {session?.user.id === post.creator._id && pathName === '/profile' && (
-                <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
-                    <p 
-                        className='font-inter text-sm green_gradient cursor-pointer'
-                        onClick={handleEdit}
-                    >
-                        Edit
-                    </p>
-                    <p 
-                        className='font-inter text-sm orange_gradient cursor-pointer'
-                        onClick={handleDelete}
-                    >
-                        Delete
-                    </p>
-                </div>
-            )}
+                {session?.user.id === post.creator._id && (
+                    <div className='flex-center gap-4'>
+                        <p 
+                            className='font-inter text-sm green_gradient cursor-pointer'
+                            onClick={handleEdit}
+                        >
+                            Edit
+                        </p>
+                        <p 
+                            className='font-inter text-sm orange_gradient cursor-pointer'
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </p>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
